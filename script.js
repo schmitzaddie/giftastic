@@ -22,9 +22,23 @@ $("button").on("click", function () {
             var p = $("<p>").text("Rating: " + results[i].rating);
             var animalImage = $("<img>");
             animalImage.attr("src", results[i].images.fixed_height_still.url);
+            animalImage.attr("data-still", results[i].images.fixed_height_still.url);
+            animalImage.attr("data-animate", results[i].images.fixed_height.url);
+            animalImage.attr("data-state", "still");
             //console.log(results[i].images.fixed_height_still.url);
             $(animalImage).on("click", function(){
-                animalImage.attr("src", results[i].images.fixed_height.url);
+                var state = $(this).attr("data-state");
+                console.log(state);
+                if (state === "still") {
+                    var animated = $(this).attr("data-animate");
+                    console.log(animated);
+                    $(this).attr("src", animated);
+                    $(this).attr("data-state", "animate")
+                } else {
+                    var still = $(this).attr("data-still");
+                    $(this).attr("src", still);
+                    $(this).attr("data-state", "still");
+                }
             });
             $("#gifs").append(p);
             $("#gifs").append(animalImage);
